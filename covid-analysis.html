@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>COVID-19 Data Analysis | Muhammad Azam</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      margin-bottom: 6px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+    .controls {
+      margin: 20px 0;
+    }
+    select {
+      padding: 8px;
+      font-size: 14px;
+    }
+    canvas {
+      background: #020617;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .insight {
+      background: #020617;
+      border-left: 4px solid #38bdf8;
+      padding: 12px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>COVID-19 Data Analysis</h1>
+  <p>Analyzing global COVID-19 trends using public data from Our World in Data.</p>
+
+  <div class="controls">
+    Country:
+    <select id="countrySelect"></select>
+  </div>
+
+  <h2>Daily New Cases per Million</h2>
+  <canvas id="casesChart"></canvas>
+
+  <h2>Daily Deaths per Million</h2>
+  <canvas id="deathsChart"></canvas>
+
+  <div class="insight">
+    <strong>Analytical Insight:</strong>
+    Infection waves show strong seasonality and reporting artifacts. Normalizing per million reveals that smaller countries often experienced higher relative impact than larger populations.
+  </div>
+</div>
+
+<script>
+const DATA_URL = "https://covid.ourworldindata.org/data/owid-covid-data.csv";
+let rawData = [];
+let casesChart, deathsChart;
+
+fetch(DATA_URL)
+  .then(res => res.text())
+  .then(text => {
+    const rows = text.split("\n").slice(1);
+    rows.forEach(r => {
+      const c = r.split(",");
+      rawData.push({
+        location: c[2],
+        date: c[3],
+        cases_pm: parseFloat(c[17]) || 0,
+        deaths_pm: parseFloat(c[20]) || 0
+      });
+    });
+    initCountrySelector();
+  });
+
+function initCountrySelector() {
+  const countries = [...new Set(rawData.map(d => d.location))].sort();
+  const select = document.getElementById("countrySelect");
+  countries.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    select.appendChild(opt);
+  });
+  select.value = "United States";
+  select.onchange = () => renderCharts(select.value);
+  renderCharts(select.value);
+}
+
+function renderCharts(country) {
+  const data = rawData.filter(d => d.location === country);
+  const labels = data.map(d => d.date);
+  const cases = data.map(d => d.cases_pm);
+  const deaths = data.map(d => d.deaths_pm);
+
+  if (casesChart) casesChart.destroy();
+  if (deathsChart) deathsChart.destroy();
+
+  casesChart = new Chart(document.getElementById("casesChart"), {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "New Cases per Million",
+        data: cases,
+        borderWidth: 1
+      }]
+    }
+  });
+
+  deathsChart = new Chart(document.getElementById("deathsChart"), {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Deaths per Million",
+        data: deaths,
+        borderWidth: 1
+      }]
+    }
+  });
+}
+</script>
+</body>
+</html>
