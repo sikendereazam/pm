@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muhammad Azam | Product Portfolio</title>
+  <meta name="description" content="Product portfolio with three case study models." />
+  <style>
+    :root { --bg:#0b0f17; --card:#121a27; --text:#e8eefc; --muted:#a7b2cc; --accent:#6ea8fe; --border:#24304a; }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      background: linear-gradient(180deg, #0b0f17 0%, #0b1222 100%);
+      color: var(--text);
+    }
+    a { color: var(--accent); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 15, 23, 0.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 18px 18px; }
+    .top {
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand { display:flex; flex-direction:column; gap:4px; }
+    .brand .name { font-weight:700; letter-spacing:0.2px; }
+    .brand .tag { color: var(--muted); font-size: 14px; }
+    nav { display:flex; gap:10px; flex-wrap:wrap; }
+    .tab {
+      border: 1px solid var(--border);
+      background: rgba(18, 26, 39, 0.55);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor:pointer;
+    }
+    .tab[aria-selected="true"] { border-color: rgba(110,168,254,0.8); box-shadow: 0 0 0 3px rgba(110,168,254,0.15); }
+    main { padding: 26px 0 60px; }
+    .hero {
+      border: 1px solid var(--border);
+      background: radial-gradient(1200px 500px at 10% 0%, rgba(110,168,254,0.16) 0%, rgba(18,26,39,0.55) 48%, rgba(18,26,39,0.35) 100%);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+    .hero h1 { margin: 0 0 8px; font-size: 22px; }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.5; }
+    .grid {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (min-width: 920px) {
+      .grid { grid-template-columns: 1.15fr 0.85fr; }
+    }
+    .card {
+      border: 1px solid var(--border);
+      background: rgba(18,26,39,0.55);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .card h2 { margin: 0 0 10px; font-size: 18px; }
+    .card h3 { margin: 14px 0 8px; font-size: 15px; color: var(--text); }
+    .card p { margin: 0 0 10px; color: var(--muted); line-height: 1.55; }
+    .pillrow { display:flex; flex-wrap:wrap; gap:8px; }
+    .pill {
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(11,15,23,0.35);
+    }
+    ul { margin: 8px 0 0 18px; color: var(--muted); line-height: 1.55; }
+    .kpis { display:grid; grid-template-columns: 1fr; gap:10px; }
+    @media (min-width: 520px) { .kpis { grid-template-columns: 1fr 1fr; } }
+    .kpi {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(11,15,23,0.35);
+    }
+    .kpi .label { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+    .kpi .value { font-size: 16px; font-weight: 700; }
+    .footer { color: var(--muted); font-size: 13px; margin-top: 18px; }
+    .btn {
+      display:inline-block;
+      border: 1px solid rgba(110,168,254,0.6);
+      background: rgba(110,168,254,0.12);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      color: var(--text);
+      cursor:pointer;
+    }
+    .btn:hover { background: rgba(110,168,254,0.18); }
+    .hidden { display:none !important; }
+    .twoCol { display:grid; grid-template-columns: 1fr; gap: 12px; }
+    @media (min-width: 920px) { .twoCol { grid-template-columns: 1fr 1fr; } }
+    .callout {
+      border-left: 3px solid rgba(110,168,254,0.75);
+      padding: 10px 12px;
+      background: rgba(110,168,254,0.08);
+      border-radius: 12px;
+      color: var(--muted);
+    }
+    code.inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: #d6e3ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div class="brand">
+        <div class="name">Muhammad Azam</div>
+        <div class="tag">Product and Business Systems | SaaS Q2C | Finance adjacent execution</div>
+      </div>
+      <nav aria-label="Case study navigation">
+        <button class="tab" data-route="home" aria-selected="true">Home</button>
+        <button class="tab" data-route="model1" aria-selected="false">Model 1 Platform PM</button>
+        <button class="tab" data-route="model2" aria-selected="false">Model 2 Revenue Finance</button>
+        <button class="tab" data-route="model3" aria-selected="false">Model 3 Adoption Analytics</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="page-home">
+      <div class="hero">
+        <h1>Portfolio case studies</h1>
+        <p>
+          Three case study models you can tailor to your real projects. Replace bracketed text with your specifics and remove anything confidential.
+        </p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>How to use these models</h2>
+          <p>
+            Pick the model that matches the job you are applying to. Keep each case study to one page of content. Use clear outcomes, constraints, and tradeoffs.
+          </p>
+          <div class="twoCol">
+            <div class="callout">
+              If you cannot share metrics, use ranges and operational indicators such as reduction in manual effort, defect rate improvement, or cycle time.
+            </div>
+            <div class="callout">
+              Avoid screenshots of internal tools. Use diagrams you create yourself and focus on decision logic and impact.
+            </div>
+          </div>
+
+          <h3>Quick checklist</h3>
+          <ul>
+            <li>One sentence problem statement</li>
+            <li>Who the users are and what pain you solved</li>
+            <li>Your ownership and decisions</li>
+            <li>Constraints and tradeoffs</li>
+            <li>Measured outcomes</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Choose a model</h2>
+          <p>Use the buttons to open a ready template.</p>
+          <p>
+            <button class="btn" onclick="routeTo('model1')">Open Model 1</button>
+            <button class="btn" onclick="routeTo('model2')">Open Model 2</button>
+            <button class="btn" onclick="routeTo('model3')">Open Model 3</button>
+          </p>
+
+          <h3>Contact</h3>
+          <p>
+            Email <span class="inline" style="font-family: ui-monospace;">sikenderazam@hotmai.co.uk</span><br />
+            LinkedIn <span class="inline" style="font-family: ui-monospace;">muhammadsazam</span>
+          </p>
+
+          <div class="footer">
+            Tip: Put this site on GitHub Pages or Netlify. One file is enough to start.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-model1" class="hidden">
+      <div class="hero">
+        <h1>Model 1 Enterprise platform PM case study</h1>
+        <p>Best for platform, SaaS, workflow, and internal product roles.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Overview</h2>
+          <p><strong>Product:</strong> [Subscription billing and order management platform]</p>
+          <p><strong>Users:</strong> [Sales ops, finance ops, customer success, provisioning teams]</p>
+          <p><strong>Problem:</strong> [Manual steps and inconsistent data caused billing errors and delayed fulfillment]</p>
+          <p><strong>My role:</strong> [Owned requirements, prioritization, and delivery coordination across product, engineering, and finance stakeholders]</p>
+
+          <h3>Context and constraints</h3>
+          <ul>
+            <li>Multiple upstream systems: CRM, CPQ, ERP, provisioning</li>
+            <li>Regulatory and audit needs for invoicing and revenue</li>
+            <li>Global regions with different tax and payment flows</li>
+          </ul>
+
+          <h3>What I did</h3>
+          <ul>
+            <li>Defined end to end workflow from quote to invoice with clear system of record boundaries</li>
+            <li>Authored epics, user stories, and acceptance criteria tied to financial controls</li>
+            <li>Designed a release plan with phased rollout and rollback criteria</li>
+            <li>Led UAT strategy with reconciliation test cases against source systems</li>
+          </ul>
+
+          <h3>Tradeoffs and decisions</h3>
+          <ul>
+            <li>Decision: [Defer low volume edge cases to phase two to protect timeline]</li>
+            <li>Decision: [Standardize data mapping even if it created short term change management]</li>
+            <li>Decision: [Prioritize billing accuracy over new features in the first release]</li>
+          </ul>
+
+          <h3>Outcomes</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="label">Billing defect reduction</div><div class="value">[X percent]</div></div>
+            <div class="kpi"><div class="label">Cycle time improvement</div><div class="value">[X days faster]</div></div>
+            <div class="kpi"><div class="label">Automation added</div><div class="value">[X workflows]</div></div>
+            <div class="kpi"><div class="label">Annualized impact</div><div class="value">[Dollar value or range]</div></div>
+          </div>
+
+          <h3>What I would do next</h3>
+          <ul>
+            <li>Add observability metrics for order failures and invoice exceptions</li>
+            <li>Introduce self serve admin tooling for billing adjustments with approvals</li>
+            <li>Move from manual reconciliations to automated anomaly detection</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Artifacts you can attach</h2>
+          <p>Use your own sanitized diagrams.</p>
+          <ul>
+            <li>Workflow diagram showing system boundaries and handoffs</li>
+            <li>Backlog snapshot with prioritization rationale</li>
+            <li>UAT plan and reconciliation matrix</li>
+            <li>Release readiness checklist and risk log</li>
+          </ul>
+
+          <h3>Interview angles</h3>
+          <ul>
+            <li>How you handled conflicting stakeholder priorities</li>
+            <li>How you defined success metrics and monitored them</li>
+            <li>How you managed risk in finance impacting releases</li>
+          </ul>
+
+          <div class="footer">
+            Replace all bracketed fields. Keep it to what you can defend in an interview.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-model2" class="hidden">
+      <div class="hero">
+        <h1>Model 2 Revenue finance and deal desk case study</h1>
+        <p>Best for FP&A, revenue finance, deal desk, and commercial finance adjacent roles.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Overview</h2>
+          <p><strong>Business goal:</strong> [Improve revenue predictability and reduce invoice exceptions]</p>
+          <p><strong>Scope:</strong> [Bookings to billings to revenue alignment for subscription contracts]</p>
+          <p><strong>Stakeholders:</strong> [Finance, sales ops, legal, billing ops, customer success]</p>
+          <p><strong>My role:</strong> [Built operating model, controls, and reporting with data backed recommendations]</p>
+
+          <h3>Problem framing</h3>
+          <ul>
+            <li>Invoice exceptions created delayed cash collection and customer escalations</li>
+            <li>Contract terms were not consistently structured for billing and revenue rules</li>
+            <li>Forecast accuracy suffered due to inconsistent operational data</li>
+          </ul>
+
+          <h3>Analysis performed</h3>
+          <ul>
+            <li>Built a driver tree linking contract attributes to billing outcomes</li>
+            <li>Segmented exception causes by region, product, and contract type</li>
+            <li>Quantified impact on cash timing and revenue timing</li>
+          </ul>
+
+          <h3>Solution and controls</h3>
+          <ul>
+            <li>Standardized contract data requirements and validation rules</li>
+            <li>Introduced approval workflow for non standard terms</li>
+            <li>Created weekly exception review operating cadence with owners</li>
+          </ul>
+
+          <h3>Outcomes</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="label">Exception rate</div><div class="value">[X percent down]</div></div>
+            <div class="kpi"><div class="label">Cash collection timing</div><div class="value">[X days faster]</div></div>
+            <div class="kpi"><div class="label">Forecast accuracy</div><div class="value">[X percent improvement]</div></div>
+            <div class="kpi"><div class="label">Manual effort reduced</div><div class="value">[X hours per week]</div></div>
+          </div>
+
+          <h3>What I learned</h3>
+          <ul>
+            <li>Finance outcomes improve most when you fix upstream data capture</li>
+            <li>Controls must be paired with a repeatable operating cadence</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Artifacts you can attach</h2>
+          <ul>
+            <li>Driver tree for exceptions and root causes</li>
+            <li>Sample finance ready definition of done for billing changes</li>
+            <li>Dashboard mock showing bookings, billings, revenue and exceptions</li>
+            <li>Control checklist aligned to revenue impacting fields</li>
+          </ul>
+
+          <h3>Interview angles</h3>
+          <ul>
+            <li>How you quantified financial impact without perfect data</li>
+            <li>How you managed stakeholder disagreements about controls</li>
+            <li>How you prevented recurrence, not just fixed one off issues</li>
+          </ul>
+
+          <div class="footer">
+            This model is strong for finance transitions because it speaks in outcomes finance teams own.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-model3" class="hidden">
+      <div class="hero">
+        <h1>Model 3 Product adoption and analytics case study</h1>
+        <p>Best for customer success platforms, product ops, analytics driven PM roles.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>Overview</h2>
+          <p><strong>Product area:</strong> [Customer onboarding and adoption]</p>
+          <p><strong>Goal:</strong> [Increase activation and reduce time to value]</p>
+          <p><strong>My role:</strong> [Defined metrics, instrumented flows, and ran experiments with cross functional teams]</p>
+
+          <h3>Baseline and metrics</h3>
+          <ul>
+            <li>Activation definition: <code class="inline">[first invoice created OR first successful transaction]</code></li>
+            <li>Time to value: <code class="inline">[days from contract to first successful usage]</code></li>
+            <li>Adoption funnel: <code class="inline">[Invite → Setup → First use → Repeat use]</code></li>
+          </ul>
+
+          <h3>Insights</h3>
+          <ul>
+            <li>Primary drop off at [step] due to missing prerequisites and unclear guidance</li>
+            <li>Secondary drop off driven by [role based permissions or data quality]</li>
+          </ul>
+
+          <h3>What I shipped</h3>
+          <ul>
+            <li>Improved onboarding flow with contextual prompts and clear error states</li>
+            <li>Created lifecycle emails and in app guidance tied to user behavior</li>
+            <li>Partnered with CS to build playbooks for high risk accounts</li>
+          </ul>
+
+          <h3>Experiment design</h3>
+          <ul>
+            <li>Hypothesis: [Changing step order reduces setup time]</li>
+            <li>Success metric: [activation rate]</li>
+            <li>Guardrails: [support tickets, churn signals]</li>
+          </ul>
+
+          <h3>Outcomes</h3>
+          <div class="kpis">
+            <div class="kpi"><div class="label">Activation rate</div><div class="value">[X percent up]</div></div>
+            <div class="kpi"><div class="label">Time to value</div><div class="value">[X days down]</div></div>
+            <div class="kpi"><div class="label">Support tickets</div><div class="value">[X percent down]</div></div>
+            <div class="kpi"><div class="label">Adoption cohort</div><div class="value">[X percent retention lift]</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Artifacts you can attach</h2>
+          <ul>
+            <li>Funnel chart and cohort chart mockups</li>
+            <li>Event taxonomy table for instrumentation</li>
+            <li>Experiment readout one pager</li>
+            <li>Onboarding playbook outline</li>
+          </ul>
+
+          <h3>Interview angles</h3>
+          <ul>
+            <li>How you defined activation and defended it</li>
+            <li>How you balanced experiments with enterprise constraints</li>
+            <li>How you partnered with CS and engineering for adoption</li>
+          </ul>
+
+          <div class="footer">
+            This model is strong if the job emphasizes metrics, onboarding, and adoption.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const pages = {
+      home: document.getElementById("page-home"),
+      model1: document.getElementById("page-model1"),
+      model2: document.getElementById("page-model2"),
+      model3: document.getElementById("page-model3"),
+    };
+
+    function setSelected(route) {
+      document.querySelectorAll(".tab").forEach(btn => {
+        const selected = btn.getAttribute("data-route") === route;
+        btn.setAttribute("aria-selected", selected ? "true" : "false");
+      });
+    }
+
+    function show(route) {
+      Object.keys(pages).forEach(k => pages[k].classList.toggle("hidden", k !== route));
+      setSelected(route);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      history.replaceState(null, "", "#" + route);
+    }
+
+    function routeTo(route) { show(route); }
+
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.addEventListener("click", () => show(btn.getAttribute("data-route")));
+    });
+
+    const initial = (location.hash || "#home").replace("#", "");
+    show(pages[initial] ? initial : "home");
+  </script>
+</body>
+</html>
